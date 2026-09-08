@@ -3,60 +3,65 @@
     "description": "Laravel package to interact with the Plausible Analytics Stats API v2 - query visitors, pageviews, sources, countries, devices, goals and realtime metrics",
     "keywords": [
         "laravel",
-        "laravel-metrics-plausible"
+        "plausible",
+        "analytics",
+        "metrics",
+        "pageviews",
+        "visitors",
+        "privacy",
+        "self-hosted"
     ],
     "homepage": "https://github.com/jeffersongoncalves/laravel-metrics-plausible",
     "license": "MIT",
     "authors": [
         {
-            "name": "Jefferson Simão Gonçalves",
+            "name": "Jefferson Gonçalves",
             "email": "gerson.simao.92@gmail.com"
         }
     ],
     "require": {
         "php": "^8.2",
-        "spatie/laravel-package-tools": "^1.16",
-        "illuminate/contracts": "^12.0|^13.0"
+        "illuminate/http": "^11.0|^12.0|^13.0",
+        "illuminate/support": "^11.0|^12.0|^13.0",
+        "spatie/laravel-package-tools": "^1.14.0",
+        "spatie/laravel-settings": "^3.0"
     },
     "require-dev": {
         "larastan/larastan": "^3.0",
         "laravel/pint": "^1.21",
-        "orchestra/testbench": "^10.0|^11.0",
+        "orchestra/testbench": "^10.0|^11.0|^12.0",
         "pestphp/pest": "^3.0|^4.0",
         "pestphp/pest-plugin-laravel": "^3.0|^4.0"
     },
     "autoload": {
         "psr-4": {
-            "Jeffersongoncalves\\MetricsPlausible\\": "src/"
+            "JeffersonGoncalves\\MetricsPlausible\\": "src"
         }
     },
     "autoload-dev": {
         "psr-4": {
-            "Jeffersongoncalves\\MetricsPlausible\\Tests\\": "tests/"
+            "JeffersonGoncalves\\MetricsPlausible\\Tests\\": "tests"
         }
     },
     "scripts": {
-        "post-autoload-dump": "@php ./vendor/bin/testbench package:discover --ansi",
-        "test": "vendor/bin/pest",
-        "test-coverage": "vendor/bin/pest --coverage",
+        "analyse": "vendor/bin/phpstan analyse",
         "format": "vendor/bin/pint",
-        "analyse": "vendor/bin/phpstan analyse"
-    },
-    "config": {
-        "sort-packages": true,
-        "allow-plugins": {
-            "pestphp/pest-plugin": true,
-            "phpstan/extension-installer": true
-        }
+        "test": "vendor/bin/pest"
     },
     "extra": {
         "laravel": {
             "providers": [
-                "Jeffersongoncalves\\MetricsPlausible\\MetricsPlausibleServiceProvider"
+                "JeffersonGoncalves\\MetricsPlausible\\MetricsPlausibleServiceProvider"
             ],
             "aliases": {
-                "MetricsPlausible": "Jeffersongoncalves\\MetricsPlausible\\Facades\\MetricsPlausible"
+                "Plausible": "JeffersonGoncalves\\MetricsPlausible\\Facades\\Plausible"
             }
+        }
+    },
+    "config": {
+        "sort-packages": true,
+        "allow-plugins": {
+            "pestphp/pest-plugin": true
         }
     },
     "minimum-stability": "dev",

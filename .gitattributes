@@ -1,5 +1,11 @@
 * text=auto eol=lf
 
+*.blade.php diff=html
+*.css diff=css
+*.html diff=html
+*.md diff=markdown
+*.php diff=php
+
 /.github export-ignore
 /art export-ignore
 /tests export-ignore
@@ -9,3 +15,4 @@
 /CHANGELOG.md export-ignore
 /phpstan.neon.dist export-ignore
 /phpunit.xml.dist export-ignore
+/pint.json export-ignore

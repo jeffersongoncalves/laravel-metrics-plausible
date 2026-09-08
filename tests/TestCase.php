@@ -1,16 +1,61 @@
 <?php
 
-namespace Jeffersongoncalves\MetricsPlausible\Tests;
+namespace JeffersonGoncalves\MetricsPlausible\Tests;
 
-use Jeffersongoncalves\MetricsPlausible\MetricsPlausibleServiceProvider;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
+use JeffersonGoncalves\MetricsPlausible\MetricsPlausibleServiceProvider;
 use Orchestra\Testbench\TestCase as Orchestra;
+use Spatie\LaravelSettings\LaravelSettingsServiceProvider;
+use Spatie\LaravelSettings\Migrations\SettingsMigrator;
 
-class TestCase extends Orchestra
+abstract class TestCase extends Orchestra
 {
+    protected function setUp(): void
+    {
+        parent::setUp();
+
+        $this->setUpDatabase();
+        $this->seedSettings();
+    }
+
     protected function getPackageProviders($app): array
     {
         return [
+            LaravelSettingsServiceProvider::class,
             MetricsPlausibleServiceProvider::class,
         ];
+    }
+
+    protected function defineEnvironment($app): void
+    {
+        $app['config']->set('database.default', 'testing');
+        $app['config']->set('database.connections.testing', [
+            'driver' => 'sqlite',
+            'database' => ':memory:',
+            'prefix' => '',
+        ]);
+    }
+
+    protected function setUpDatabase(): void
+    {
+        Schema::create('settings', function (Blueprint $table): void {
+            $table->id();
+            $table->string('group');
+            $table->string('name');
+            $table->boolean('locked')->default(false);
+            $table->json('payload');
+            $table->timestamps();
+            $table->unique(['group', 'name']);
+        });
+    }
+
+    protected function seedSettings(): void
+    {
+        $migrator = app(SettingsMigrator::class);
+
+        $migrator->add('metrics-plausible.api_key', 'test-key');
+        $migrator->add('metrics-plausible.site_id', 'example.com');
+        $migrator->add('metrics-plausible.base_url', 'https://plausible.io');
     }
 }

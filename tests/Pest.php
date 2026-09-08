@@ -1,3 +1,5 @@
 <?php
 
-uses(Jeffersongoncalves\MetricsPlausible\Tests\TestCase::class)->in('Feature', 'Unit');
+use JeffersonGoncalves\MetricsPlausible\Tests\TestCase;
+
+uses(TestCase::class)->in('Feature', 'Unit');
